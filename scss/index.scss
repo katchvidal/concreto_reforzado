@@ -1,5 +1,7 @@
-// Import Layout
-@import "../layouts/start/start.scss";
-
 //  Import Colors
 @import "./colors.scss";
+// Import Layout
+@import "../layouts/start/start.scss";
+// Import Components
+@import "../components/Header/Header.scss";
+@import "../components/Header/TopBar/TopBar.scss";
