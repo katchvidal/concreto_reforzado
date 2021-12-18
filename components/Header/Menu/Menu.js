@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/link-passhref */
 import React, { useState } from "react";
-import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
+import { Container, Menu, Grid, Icon, Button } from "semantic-ui-react";
 import Link from "next/link";
 import BasicModal from "../../Modal/BasicModal/BasicModal";
 import Auth from "../../Auth";
+import useAuth from "../../../hooks/useAuth";
 
 export default function MenuWeb() {
   //  Estado del Modal
@@ -14,6 +15,8 @@ export default function MenuWeb() {
   const closeShowModal = () => setshowModal(false);
   // Estado del Titulo
   const [titleModal, settitleModal] = useState("Iniciar Sesion");
+  //  Funcion de Logout, Auth
+  const { logout, auth } = useAuth();
 
   return (
     <div className="menu">
@@ -23,7 +26,13 @@ export default function MenuWeb() {
             <MenuPlatform />
           </Grid.Column>
           <Grid.Column className="menu__right" width={10}>
-            <MenuUser onShowModal={onShowModal} />
+            {auth ? (
+              <Button basic onClick={logout}>
+                Cerrar Sesion
+              </Button>
+            ) : (
+              <MenuUser onShowModal={onShowModal} />
+            )}
           </Grid.Column>
         </Grid>
       </Container>

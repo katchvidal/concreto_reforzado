@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Form } from "semantic-ui-react";
 import * as Yup from "yup";
-import { StrappiLogin } from "../../../api/user";
+import { StrappiLogin, StrappiResetPassword } from "../../../api/user";
+import useAuth from "../../../hooks/useAuth";
 
 export default function LoginForm({ ShowRegisterForm, closeShowModal }) {
   const [Loading, setLoading] = useState(false);
+  const { login } = useAuth();
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validateSchema()),
@@ -14,6 +17,7 @@ export default function LoginForm({ ShowRegisterForm, closeShowModal }) {
       setLoading(true);
       const result = await StrappiLogin(values);
       if (result?.jwt) {
+        login(result.jwt);
         closeShowModal();
         toast.success(
           `Bienvenido/a ${result.user.name} ${result.user.lastname}`,
@@ -25,6 +29,17 @@ export default function LoginForm({ ShowRegisterForm, closeShowModal }) {
       setLoading(false);
     },
   });
+
+  const ResetPassword = () => {
+    formik.setErrors({});
+    const validateEmail = Yup.string().email().required();
+    if (!validateEmail.isValidSync(formik.values.identifier)) {
+      formik.setErrors({ identifier: true });
+    } else {
+      StrappiResetPassword(formik.values.identifier);
+    }
+  };
+
   return (
     <Form className="login-form" onSubmit={formik.handleSubmit}>
       <Form.Input
@@ -51,7 +66,9 @@ export default function LoginForm({ ShowRegisterForm, closeShowModal }) {
           <Button className="submit" type="submit" loading={Loading}>
             Sign in
           </Button>
-          <Button type="button"> ¿Forgot Password? </Button>
+          <Button type="button" onClick={ResetPassword}>
+            ¿Forgot Password?
+          </Button>
         </div>
       </div>
     </Form>
