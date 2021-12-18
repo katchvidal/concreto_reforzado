@@ -1,0 +1,15 @@
+.change-name-form {
+  padding: 30px 20px;
+
+  > h3 {
+    color: $primary;
+    font-size: 22px;
+  }
+
+  > form {
+    text-align: center;
+    .submit {
+      padding: 20px 60px;
+    }
+  }
+}
