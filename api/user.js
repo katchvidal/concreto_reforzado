@@ -1,4 +1,5 @@
 import { URL_BASE } from "../utils/constants";
+import { authFetch } from "../utils/fetch";
 
 //  Peticiones Fetch a API publicas
 
@@ -54,5 +55,16 @@ export async function StrappiResetPassword(identifier) {
     return result;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function StrappiGetMe(logout) {
+  try {
+    const url = `${URL_BASE}/api/users/me`;
+    const result = await authFetch(url, null, logout);
+    return result ? result : null;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 }
