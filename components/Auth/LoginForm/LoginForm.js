@@ -85,8 +85,6 @@ function initialValues() {
 function validateSchema() {
   return {
     identifier: Yup.string().required(true).email(true),
-    password: Yup.string()
-      .required(true)
-      .min(6, "Minimo Seis Caracteres Incluidas Mayusculas y Minisculas"),
+    password: Yup.string().required(true),
   };
 }

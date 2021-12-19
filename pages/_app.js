@@ -28,7 +28,7 @@ export default function MyApp({ Component, pageProps }) {
       setAuth(null);
     }
     setReloadUser(false);
-  }, [setReloadUser]);
+  }, [reloadUser]);
 
   //Funcion de Login
   const login = (token) => {

@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import useAuth from "../hooks/useAuth";
 import { StrappiGetMe } from "../api/user";
 import ChangeNameForm from "../components/Account/ChangeNameForm/ChangeNameForm";
+import ChangeEmailForm from "../components/Account/ChangeEmailForm/ChangeEmailForm";
+import ChangePasswordForm from "../components/Account/ChangePasswordForm/ChangePasswordForm";
 
 export default function account() {
   const [user, setUser] = useState(undefined);
@@ -46,6 +48,12 @@ function Configuration({ user, setReloadUser, logout }) {
           setReloadUser={setReloadUser}
           logout={logout}
         />
+        <ChangeEmailForm
+          user={user}
+          setReloadUser={setReloadUser}
+          logout={logout}
+        />
+        <ChangePasswordForm user={user} logout={logout} />
       </div>
     </div>
   );

@@ -86,3 +86,39 @@ export async function StrappiUpdateUser(idUser, data, logout) {
     return null;
   }
 }
+
+export async function StrappiUpdateEmail(idUser, data, logout) {
+  try {
+    const url = `${URL_BASE}/api/users/${idUser}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    const result = await authFetch(url, params, logout);
+    return result ? result : null;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+export async function StrappiUpdatePassword(idUser, data, logout) {
+  try {
+    const url = `${URL_BASE}/api/users/${idUser}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    const result = await authFetch(url, params, logout);
+    return result ? result : null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
