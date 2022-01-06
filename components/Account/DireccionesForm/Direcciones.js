@@ -25,7 +25,7 @@ export default function Direcciones({ setshowModal }) {
       ...values,
       user: auth.id,
     };
-    const result = await StrappiCreateAddress(Address, logout);
+    const result = await StrappiCreateAddress({ Address }, logout);
     console.log(result);
     setLoading(false);
   };

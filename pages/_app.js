@@ -7,6 +7,8 @@ import React, { useMemo, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { getToken, removeToken, setToken } from "../utils/token";
 import { useRouter } from "next/router";
+import client from "../apollo/Client";
+import { ApolloProvider } from "@apollo/client";
 
 export default function MyApp({ Component, pageProps }) {
   // Estado que se encarga de Verificar si estan Autenticados o no
@@ -63,19 +65,21 @@ export default function MyApp({ Component, pageProps }) {
   if (auth === undefined) return null;
   return (
     <>
-      <AuthContext.Provider value={authData}>
-        <Component {...pageProps} />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable
-          pauseOnHover
-        />
-      </AuthContext.Provider>
+      <ApolloProvider client={client}>
+        <AuthContext.Provider value={authData}>
+          <Component {...pageProps} />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable
+            pauseOnHover
+          />
+        </AuthContext.Provider>
+      </ApolloProvider>
     </>
   );
 }

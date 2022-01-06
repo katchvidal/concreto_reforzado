@@ -6,8 +6,11 @@ import BasicModal from "../../Modal/BasicModal/BasicModal";
 import Auth from "../../Auth";
 import useAuth from "../../../hooks/useAuth";
 import { StrappiGetMe } from "../../../api/user";
+import { useQuery } from "@apollo/client";
+import { GETME } from "../../../graphql/user";
 
 export default function MenuWeb() {
+  const { data, loading, error } = useQuery(GETME);
   //  Estado del Modal
   const [showModal, setshowModal] = useState(false);
   // Funcion para Abrir Modal
@@ -19,14 +22,18 @@ export default function MenuWeb() {
   //  Estado que guarda el Usuario de la Peticion a Strappi
   const [user, setUser] = useState(undefined);
   //  Funcion de Logout, Auth
-  const { logout, auth } = useAuth();
+  const { logout, auth, setReloadUser } = useAuth();
 
   useEffect(() => {
     (async () => {
-      const response = await StrappiGetMe(logout);
-      setUser(response);
+      if (data === null || data === undefined) {
+        return setUser(null);
+      }
+      //const response = await StrappiGetMe(logout);
+      setUser(data.me.user);
+      setReloadUser(true);
     })();
-  }, [auth, logout]);
+  }, [auth, logout, data, setReloadUser]);
 
   return (
     <div className="menu">
